@@ -1,5 +1,8 @@
 package com.ventas.exception;
 
+import com.ventas.VentasApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +21,7 @@ import java.util.Map;
 @ControllerAdvice
 @RestController
 public class ResponseExceptionHandler  extends ResponseEntityExceptionHandler {
-
-    public final String MESSAGE = "Fatal fail";
+    private final String MESSAGE = "Fatal fail";
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResponse> handlerAllException(Exception e){
@@ -33,6 +35,7 @@ public class ResponseExceptionHandler  extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
         Map<String,  String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach( (error) -> {
             String fieldName = ((FieldError) error).getField();
